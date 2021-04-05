@@ -34,7 +34,10 @@
 #include <X11/keysym.h>
 #include <X11/Xlib.h>
 #include <X11/XKBlib.h>
-#include <cstring> // strcmp
+#include <cstring>
+#include <map>
+#include <string>
+#include <utility>
 
 namespace
 {
@@ -43,13 +46,12 @@ const KeyCode NullKeyCode = 0;
 const int MaxKeyCode = 256;
 KeyCode scancodeToKeycode[sf::Keyboard::ScanCodeCount]; ///< Mapping of SFML scancode to X11 KeyCode
 sf::Keyboard::Scancode keycodeToScancode[MaxKeyCode]; ///< Mapping of X11 KeyCode to SFML scancode
-bool isMappingInitialized = false;
 
 ////////////////////////////////////////////////////////////
 bool isValidKeycode(KeyCode keycode)
 {
     // Valid key code range is [8,255], according to the Xlib manual
-    return (keycode >= 8) && (keycode < MaxKeyCode);
+    return (keycode >= 8);
 }
 
 
@@ -266,10 +268,189 @@ sf::Keyboard::Scancode translateKeyCode(Display* display, KeyCode keycode)
     }
 }
 
+////////////////////////////////////////////////////////////
+std::map<std::string, sf::Keyboard::Scancode> GetNameScanCodeMap()
+{
+    std::map<std::string, sf::Keyboard::Scancode> mapping;
+
+    mapping.insert(std::make_pair("LSGT", sf::Keyboard::ScanNonUsBackslash));
+
+    mapping.insert(std::make_pair("TLDE", sf::Keyboard::ScanGrave));
+    mapping.insert(std::make_pair("AE01", sf::Keyboard::ScanNum1));
+    mapping.insert(std::make_pair("AE02", sf::Keyboard::ScanNum2));
+    mapping.insert(std::make_pair("AE03", sf::Keyboard::ScanNum3));
+    mapping.insert(std::make_pair("AE04", sf::Keyboard::ScanNum4));
+    mapping.insert(std::make_pair("AE05", sf::Keyboard::ScanNum5));
+    mapping.insert(std::make_pair("AE06", sf::Keyboard::ScanNum6));
+    mapping.insert(std::make_pair("AE07", sf::Keyboard::ScanNum7));
+    mapping.insert(std::make_pair("AE08", sf::Keyboard::ScanNum8));
+    mapping.insert(std::make_pair("AE09", sf::Keyboard::ScanNum9));
+    mapping.insert(std::make_pair("AE10", sf::Keyboard::ScanNum0));
+    mapping.insert(std::make_pair("AE11", sf::Keyboard::ScanHyphen));
+    mapping.insert(std::make_pair("AE12", sf::Keyboard::ScanEqual));
+    mapping.insert(std::make_pair("BKSP", sf::Keyboard::ScanBackspace));
+    mapping.insert(std::make_pair("TAB",  sf::Keyboard::ScanTab));
+    mapping.insert(std::make_pair("AD01", sf::Keyboard::ScanQ));
+    mapping.insert(std::make_pair("AD02", sf::Keyboard::ScanW));
+    mapping.insert(std::make_pair("AD03", sf::Keyboard::ScanE));
+    mapping.insert(std::make_pair("AD04", sf::Keyboard::ScanR));
+    mapping.insert(std::make_pair("AD05", sf::Keyboard::ScanT));
+    mapping.insert(std::make_pair("AD06", sf::Keyboard::ScanY));
+    mapping.insert(std::make_pair("AD07", sf::Keyboard::ScanU));
+    mapping.insert(std::make_pair("AD08", sf::Keyboard::ScanI));
+    mapping.insert(std::make_pair("AD09", sf::Keyboard::ScanO));
+    mapping.insert(std::make_pair("AD10", sf::Keyboard::ScanP));
+    mapping.insert(std::make_pair("AD11", sf::Keyboard::ScanLBracket));
+    mapping.insert(std::make_pair("AD12", sf::Keyboard::ScanRBracket));
+    mapping.insert(std::make_pair("BKSL", sf::Keyboard::ScanBackslash));
+    mapping.insert(std::make_pair("RTRN", sf::Keyboard::ScanEnter));
+
+    mapping.insert(std::make_pair("CAPS", sf::Keyboard::ScanCapsLock));
+    mapping.insert(std::make_pair("AC01", sf::Keyboard::ScanA));
+    mapping.insert(std::make_pair("AC02", sf::Keyboard::ScanS));
+    mapping.insert(std::make_pair("AC03", sf::Keyboard::ScanD));
+    mapping.insert(std::make_pair("AC04", sf::Keyboard::ScanF));
+    mapping.insert(std::make_pair("AC05", sf::Keyboard::ScanG));
+    mapping.insert(std::make_pair("AC06", sf::Keyboard::ScanH));
+    mapping.insert(std::make_pair("AC07", sf::Keyboard::ScanJ));
+    mapping.insert(std::make_pair("AC08", sf::Keyboard::ScanK));
+    mapping.insert(std::make_pair("AC09", sf::Keyboard::ScanL));
+    mapping.insert(std::make_pair("AC10", sf::Keyboard::ScanSemicolon));
+    mapping.insert(std::make_pair("AC11", sf::Keyboard::ScanApostrophe));
+    mapping.insert(std::make_pair("AC12", sf::Keyboard::ScanBackslash));
+
+    mapping.insert(std::make_pair("LFSH", sf::Keyboard::ScanLShift));
+    mapping.insert(std::make_pair("AB01", sf::Keyboard::ScanZ));
+    mapping.insert(std::make_pair("AB02", sf::Keyboard::ScanX));
+    mapping.insert(std::make_pair("AB03", sf::Keyboard::ScanC));
+    mapping.insert(std::make_pair("AB04", sf::Keyboard::ScanV));
+    mapping.insert(std::make_pair("AB05", sf::Keyboard::ScanB));
+    mapping.insert(std::make_pair("AB06", sf::Keyboard::ScanN));
+    mapping.insert(std::make_pair("AB07", sf::Keyboard::ScanM));
+    mapping.insert(std::make_pair("AB08", sf::Keyboard::ScanComma));
+    mapping.insert(std::make_pair("AB09", sf::Keyboard::ScanPeriod));
+    mapping.insert(std::make_pair("AB10", sf::Keyboard::ScanSlash));
+    mapping.insert(std::make_pair("RTSH", sf::Keyboard::ScanRShift));
+
+    mapping.insert(std::make_pair("LCTL", sf::Keyboard::ScanLControl));
+    mapping.insert(std::make_pair("LALT", sf::Keyboard::ScanLAlt));
+    mapping.insert(std::make_pair("SPCE", sf::Keyboard::ScanSpace));
+    mapping.insert(std::make_pair("RCTL", sf::Keyboard::ScanRControl));
+    mapping.insert(std::make_pair("RALT", sf::Keyboard::ScanRAlt));
+    mapping.insert(std::make_pair("LVL3", sf::Keyboard::ScanRAlt));
+    mapping.insert(std::make_pair("ALGR", sf::Keyboard::ScanRAlt));
+    mapping.insert(std::make_pair("LWIN", sf::Keyboard::ScanLSystem));
+    mapping.insert(std::make_pair("RWIN", sf::Keyboard::ScanRSystem));
+
+    mapping.insert(std::make_pair("HYPR", sf::Keyboard::ScanApplication));
+    mapping.insert(std::make_pair("EXEC", sf::Keyboard::ScanExecute));
+    mapping.insert(std::make_pair("MDSW", sf::Keyboard::ScanModeChange));
+    mapping.insert(std::make_pair("MENU", sf::Keyboard::ScanMenu));
+    mapping.insert(std::make_pair("COMP", sf::Keyboard::ScanMenu));
+    mapping.insert(std::make_pair("SELE", sf::Keyboard::ScanSelect));
+
+    mapping.insert(std::make_pair("ESC",  sf::Keyboard::ScanEscape));
+    mapping.insert(std::make_pair("FK01", sf::Keyboard::ScanF1));
+    mapping.insert(std::make_pair("FK02", sf::Keyboard::ScanF2));
+    mapping.insert(std::make_pair("FK03", sf::Keyboard::ScanF3));
+    mapping.insert(std::make_pair("FK04", sf::Keyboard::ScanF4));
+    mapping.insert(std::make_pair("FK05", sf::Keyboard::ScanF5));
+    mapping.insert(std::make_pair("FK06", sf::Keyboard::ScanF6));
+    mapping.insert(std::make_pair("FK07", sf::Keyboard::ScanF7));
+    mapping.insert(std::make_pair("FK08", sf::Keyboard::ScanF8));
+    mapping.insert(std::make_pair("FK09", sf::Keyboard::ScanF9));
+    mapping.insert(std::make_pair("FK10", sf::Keyboard::ScanF10));
+    mapping.insert(std::make_pair("FK11", sf::Keyboard::ScanF11));
+    mapping.insert(std::make_pair("FK12", sf::Keyboard::ScanF12));
+
+    mapping.insert(std::make_pair("PRSC", sf::Keyboard::ScanPrintScreen));
+    mapping.insert(std::make_pair("SCLK", sf::Keyboard::ScanScrollLock));
+    mapping.insert(std::make_pair("PAUS", sf::Keyboard::ScanPause));
+
+    mapping.insert(std::make_pair("INS",  sf::Keyboard::ScanInsert));
+    mapping.insert(std::make_pair("HOME", sf::Keyboard::ScanHome));
+    mapping.insert(std::make_pair("PGUP", sf::Keyboard::ScanPageUp));
+    mapping.insert(std::make_pair("DELE", sf::Keyboard::ScanDelete));
+    mapping.insert(std::make_pair("END",  sf::Keyboard::ScanEnd));
+    mapping.insert(std::make_pair("PGDN", sf::Keyboard::ScanPageDown));
+
+    mapping.insert(std::make_pair("UP",   sf::Keyboard::ScanUp));
+    mapping.insert(std::make_pair("RGHT", sf::Keyboard::ScanRight));
+    mapping.insert(std::make_pair("DOWN", sf::Keyboard::ScanDown));
+    mapping.insert(std::make_pair("LEFT", sf::Keyboard::ScanLeft));
+
+    mapping.insert(std::make_pair("NMLK", sf::Keyboard::ScanNumLock));
+    mapping.insert(std::make_pair("KPDV", sf::Keyboard::ScanNumpadDivide));
+    mapping.insert(std::make_pair("KPMU", sf::Keyboard::ScanNumpadMultiply));
+    mapping.insert(std::make_pair("KPSU", sf::Keyboard::ScanNumpadMinus));
+
+    mapping.insert(std::make_pair("KP7",  sf::Keyboard::ScanNumpad7));
+    mapping.insert(std::make_pair("KP8",  sf::Keyboard::ScanNumpad8));
+    mapping.insert(std::make_pair("KP9",  sf::Keyboard::ScanNumpad9));
+    mapping.insert(std::make_pair("KPAD", sf::Keyboard::ScanNumpadPlus));
+    mapping.insert(std::make_pair("KP4",  sf::Keyboard::ScanNumpad4));
+    mapping.insert(std::make_pair("KP5",  sf::Keyboard::ScanNumpad5));
+    mapping.insert(std::make_pair("KP6",  sf::Keyboard::ScanNumpad6));
+    mapping.insert(std::make_pair("KP1",  sf::Keyboard::ScanNumpad1));
+    mapping.insert(std::make_pair("KP2",  sf::Keyboard::ScanNumpad2));
+    mapping.insert(std::make_pair("KP3",  sf::Keyboard::ScanNumpad3));
+    mapping.insert(std::make_pair("KPEN", sf::Keyboard::ScanNumpadEnter));
+    mapping.insert(std::make_pair("KP0",  sf::Keyboard::ScanNumpad0));
+    mapping.insert(std::make_pair("KPDL", sf::Keyboard::ScanNumpadDecimal));
+    mapping.insert(std::make_pair("KPEQ", sf::Keyboard::ScanNumpadEqual));
+
+    mapping.insert(std::make_pair("FK13", sf::Keyboard::ScanF13));
+    mapping.insert(std::make_pair("FK14", sf::Keyboard::ScanF14));
+    mapping.insert(std::make_pair("FK15", sf::Keyboard::ScanF15));
+    mapping.insert(std::make_pair("FK16", sf::Keyboard::ScanF16));
+    mapping.insert(std::make_pair("FK17", sf::Keyboard::ScanF17));
+    mapping.insert(std::make_pair("FK18", sf::Keyboard::ScanF18));
+    mapping.insert(std::make_pair("FK19", sf::Keyboard::ScanF19));
+    mapping.insert(std::make_pair("FK20", sf::Keyboard::ScanF20));
+    mapping.insert(std::make_pair("FK21", sf::Keyboard::ScanF21));
+    mapping.insert(std::make_pair("FK22", sf::Keyboard::ScanF22));
+    mapping.insert(std::make_pair("FK23", sf::Keyboard::ScanF23));
+    mapping.insert(std::make_pair("FK24", sf::Keyboard::ScanF24));
+    mapping.insert(std::make_pair("LMTA", sf::Keyboard::ScanLSystem));
+    mapping.insert(std::make_pair("RMTA", sf::Keyboard::ScanRSystem));
+    mapping.insert(std::make_pair("MUTE", sf::Keyboard::ScanVolumeMute));
+    mapping.insert(std::make_pair("VOL-", sf::Keyboard::ScanVolumeDown));
+    mapping.insert(std::make_pair("VOL+", sf::Keyboard::ScanVolumeUp));
+    mapping.insert(std::make_pair("STOP", sf::Keyboard::ScanStop));
+    mapping.insert(std::make_pair("REDO", sf::Keyboard::ScanRedo));
+    mapping.insert(std::make_pair("AGAI", sf::Keyboard::ScanRedo));
+    mapping.insert(std::make_pair("UNDO", sf::Keyboard::ScanUndo));
+    mapping.insert(std::make_pair("COPY", sf::Keyboard::ScanCopy));
+    mapping.insert(std::make_pair("PAST", sf::Keyboard::ScanPaste));
+    mapping.insert(std::make_pair("FIND", sf::Keyboard::ScanSearch));
+    mapping.insert(std::make_pair("CUT",  sf::Keyboard::ScanCut));
+    mapping.insert(std::make_pair("HELP", sf::Keyboard::ScanHelp));
+
+    mapping.insert(std::make_pair("I156", sf::Keyboard::ScanLaunchApplication1));
+    mapping.insert(std::make_pair("I157", sf::Keyboard::ScanLaunchApplication2));
+    mapping.insert(std::make_pair("I164", sf::Keyboard::ScanFavorites));
+    mapping.insert(std::make_pair("I166", sf::Keyboard::ScanBack));
+    mapping.insert(std::make_pair("I167", sf::Keyboard::ScanForward));
+    mapping.insert(std::make_pair("I171", sf::Keyboard::ScanMediaNextTrack));
+    mapping.insert(std::make_pair("I172", sf::Keyboard::ScanMediaPlayPause));
+    mapping.insert(std::make_pair("I173", sf::Keyboard::ScanMediaPreviousTrack));
+    mapping.insert(std::make_pair("I174", sf::Keyboard::ScanMediaStop));
+    mapping.insert(std::make_pair("I180", sf::Keyboard::ScanHomePage));
+    mapping.insert(std::make_pair("I181", sf::Keyboard::ScanRefresh));
+    mapping.insert(std::make_pair("I223", sf::Keyboard::ScanLaunchMail));
+    mapping.insert(std::make_pair("I234", sf::Keyboard::ScanLaunchMediaSelect));
+
+    return mapping;
+}
 
 ////////////////////////////////////////////////////////////
-void initMapping()
+void ensureMapping()
 {
+    static bool isMappingInitialized = false;
+
+    if (isMappingInitialized)
+        return;
+
     for (int i = 0; i < MaxKeyCode; ++i)
         scancodeToKeycode[i] = NullKeyCode;
 
@@ -278,14 +459,12 @@ void initMapping()
 
     Display* display = sf::priv::OpenDisplay();
 
-    // Find the X11 key code -> SFML key code mapping
-    // This code was inspired by GLFW implementation
-
     char name[XkbKeyNameLength + 1];
     XkbDescPtr descriptor = XkbGetMap(display, 0, XkbUseCoreKbd);
     XkbGetNames(display, XkbKeyNamesMask, descriptor);
-
-    sf::Keyboard::Scancode scancode;
+    
+    std::map<std::string, sf::Keyboard::Scancode> nameScanCodeMap = GetNameScanCodeMap();
+    sf::Keyboard::Scancode scancode = sf::Keyboard::ScanUnknown;
 
     for (int keycode = descriptor->min_key_code; keycode <= descriptor->max_key_code; ++keycode)
     {
@@ -297,181 +476,14 @@ void initMapping()
         std::memcpy(name, descriptor->names->keys[keycode].name, XkbKeyNameLength);
         name[XkbKeyNameLength] = '\0';
 
-        if      (strcmp(name, "LSGT") == 0) scancode = sf::Keyboard::ScanNonUsBackslash;
+        std::map<std::string, sf::Keyboard::Scancode>::iterator mappedScanCode = nameScanCodeMap.find(std::string(name));
+        scancode = sf::Keyboard::ScanUnknown;
 
-        else if (strcmp(name, "TLDE") == 0) scancode = sf::Keyboard::ScanGrave;
-        else if (strcmp(name, "AE01") == 0) scancode = sf::Keyboard::ScanNum1;
-        else if (strcmp(name, "AE02") == 0) scancode = sf::Keyboard::ScanNum2;
-        else if (strcmp(name, "AE03") == 0) scancode = sf::Keyboard::ScanNum3;
-        else if (strcmp(name, "AE04") == 0) scancode = sf::Keyboard::ScanNum4;
-        else if (strcmp(name, "AE05") == 0) scancode = sf::Keyboard::ScanNum5;
-        else if (strcmp(name, "AE06") == 0) scancode = sf::Keyboard::ScanNum6;
-        else if (strcmp(name, "AE07") == 0) scancode = sf::Keyboard::ScanNum7;
-        else if (strcmp(name, "AE08") == 0) scancode = sf::Keyboard::ScanNum8;
-        else if (strcmp(name, "AE09") == 0) scancode = sf::Keyboard::ScanNum9;
-        else if (strcmp(name, "AE10") == 0) scancode = sf::Keyboard::ScanNum0;
-        else if (strcmp(name, "AE11") == 0) scancode = sf::Keyboard::ScanHyphen;
-        else if (strcmp(name, "AE12") == 0) scancode = sf::Keyboard::ScanEqual;
-        else if (strcmp(name, "BKSP") == 0) scancode = sf::Keyboard::ScanBackspace;
-        
-        else if (strcmp(name, "TAB")  == 0) scancode = sf::Keyboard::ScanTab;
-        else if (strcmp(name, "AD01") == 0) scancode = sf::Keyboard::ScanQ;
-        else if (strcmp(name, "AD02") == 0) scancode = sf::Keyboard::ScanW;
-        else if (strcmp(name, "AD03") == 0) scancode = sf::Keyboard::ScanE;
-        else if (strcmp(name, "AD04") == 0) scancode = sf::Keyboard::ScanR;
-        else if (strcmp(name, "AD05") == 0) scancode = sf::Keyboard::ScanT;
-        else if (strcmp(name, "AD06") == 0) scancode = sf::Keyboard::ScanY;
-        else if (strcmp(name, "AD07") == 0) scancode = sf::Keyboard::ScanU;
-        else if (strcmp(name, "AD08") == 0) scancode = sf::Keyboard::ScanI;
-        else if (strcmp(name, "AD09") == 0) scancode = sf::Keyboard::ScanO;
-        else if (strcmp(name, "AD10") == 0) scancode = sf::Keyboard::ScanP;
-        else if (strcmp(name, "AD11") == 0) scancode = sf::Keyboard::ScanLBracket;
-        else if (strcmp(name, "AD12") == 0) scancode = sf::Keyboard::ScanRBracket;
-        else if (strcmp(name, "BKSL") == 0) scancode = sf::Keyboard::ScanBackslash;
-        else if (strcmp(name, "RTRN") == 0) scancode = sf::Keyboard::ScanEnter;
+        if (mappedScanCode != nameScanCodeMap.end())
+            scancode = mappedScanCode->second;
 
-        else if (strcmp(name, "CAPS") == 0) scancode = sf::Keyboard::ScanCapsLock;
-        else if (strcmp(name, "AC01") == 0) scancode = sf::Keyboard::ScanA;
-        else if (strcmp(name, "AC02") == 0) scancode = sf::Keyboard::ScanS;
-        else if (strcmp(name, "AC03") == 0) scancode = sf::Keyboard::ScanD;
-        else if (strcmp(name, "AC04") == 0) scancode = sf::Keyboard::ScanF;
-        else if (strcmp(name, "AC05") == 0) scancode = sf::Keyboard::ScanG;
-        else if (strcmp(name, "AC06") == 0) scancode = sf::Keyboard::ScanH;
-        else if (strcmp(name, "AC07") == 0) scancode = sf::Keyboard::ScanJ;
-        else if (strcmp(name, "AC08") == 0) scancode = sf::Keyboard::ScanK;
-        else if (strcmp(name, "AC09") == 0) scancode = sf::Keyboard::ScanL;
-        else if (strcmp(name, "AC10") == 0) scancode = sf::Keyboard::ScanSemicolon;
-        else if (strcmp(name, "AC11") == 0) scancode = sf::Keyboard::ScanApostrophe;
-        else if (strcmp(name, "AC12") == 0) scancode = sf::Keyboard::ScanBackslash;
-
-        else if (strcmp(name, "LFSH") == 0) scancode = sf::Keyboard::ScanLShift;
-        else if (strcmp(name, "AB01") == 0) scancode = sf::Keyboard::ScanZ;
-        else if (strcmp(name, "AB02") == 0) scancode = sf::Keyboard::ScanX;
-        else if (strcmp(name, "AB03") == 0) scancode = sf::Keyboard::ScanC;
-        else if (strcmp(name, "AB04") == 0) scancode = sf::Keyboard::ScanV;
-        else if (strcmp(name, "AB05") == 0) scancode = sf::Keyboard::ScanB;
-        else if (strcmp(name, "AB06") == 0) scancode = sf::Keyboard::ScanN;
-        else if (strcmp(name, "AB07") == 0) scancode = sf::Keyboard::ScanM;
-        else if (strcmp(name, "AB08") == 0) scancode = sf::Keyboard::ScanComma;
-        else if (strcmp(name, "AB09") == 0) scancode = sf::Keyboard::ScanPeriod;
-        else if (strcmp(name, "AB10") == 0) scancode = sf::Keyboard::ScanSlash;
-        else if (strcmp(name, "RTSH") == 0) scancode = sf::Keyboard::ScanRShift;
-
-        else if (strcmp(name, "LCTL") == 0) scancode = sf::Keyboard::ScanLControl;
-        else if (strcmp(name, "LALT") == 0) scancode = sf::Keyboard::ScanLAlt;
-        else if (strcmp(name, "SPCE") == 0) scancode = sf::Keyboard::ScanSpace;
-        else if (strcmp(name, "RCTL") == 0) scancode = sf::Keyboard::ScanRControl;
-        else if (strcmp(name, "RALT") == 0) scancode = sf::Keyboard::ScanRAlt;
-        else if (strcmp(name, "LVL3") == 0) scancode = sf::Keyboard::ScanRAlt;
-        else if (strcmp(name, "ALGR") == 0) scancode = sf::Keyboard::ScanRAlt;
-        else if (strcmp(name, "LWIN") == 0) scancode = sf::Keyboard::ScanLSystem;
-        else if (strcmp(name, "RWIN") == 0) scancode = sf::Keyboard::ScanRSystem;
-
-        else if (strcmp(name, "HYPR") == 0) scancode = sf::Keyboard::ScanApplication;
-        else if (strcmp(name, "EXEC") == 0) scancode = sf::Keyboard::ScanExecute;
-        else if (strcmp(name, "MDSW") == 0) scancode = sf::Keyboard::ScanModeChange;
-        else if (strcmp(name, "MENU") == 0) scancode = sf::Keyboard::ScanMenu;
-        else if (strcmp(name, "COMP") == 0) scancode = sf::Keyboard::ScanMenu;
-        else if (strcmp(name, "SELE") == 0) scancode = sf::Keyboard::ScanSelect;
-
-        else if (strcmp(name, "ESC")  == 0) scancode = sf::Keyboard::ScanEscape;
-        else if (strcmp(name, "FK01") == 0) scancode = sf::Keyboard::ScanF1;
-        else if (strcmp(name, "FK02") == 0) scancode = sf::Keyboard::ScanF2;
-        else if (strcmp(name, "FK03") == 0) scancode = sf::Keyboard::ScanF3;
-        else if (strcmp(name, "FK04") == 0) scancode = sf::Keyboard::ScanF4;
-        else if (strcmp(name, "FK05") == 0) scancode = sf::Keyboard::ScanF5;
-        else if (strcmp(name, "FK06") == 0) scancode = sf::Keyboard::ScanF6;
-        else if (strcmp(name, "FK07") == 0) scancode = sf::Keyboard::ScanF7;
-        else if (strcmp(name, "FK08") == 0) scancode = sf::Keyboard::ScanF8;
-        else if (strcmp(name, "FK09") == 0) scancode = sf::Keyboard::ScanF9;
-        else if (strcmp(name, "FK10") == 0) scancode = sf::Keyboard::ScanF10;
-        else if (strcmp(name, "FK11") == 0) scancode = sf::Keyboard::ScanF11;
-        else if (strcmp(name, "FK12") == 0) scancode = sf::Keyboard::ScanF12;
-
-        else if (strcmp(name, "PRSC") == 0) scancode = sf::Keyboard::ScanPrintScreen;
-        else if (strcmp(name, "SCLK") == 0) scancode = sf::Keyboard::ScanScrollLock;
-        else if (strcmp(name, "PAUS") == 0) scancode = sf::Keyboard::ScanPause;
-
-        else if (strcmp(name, "INS")  == 0) scancode = sf::Keyboard::ScanInsert;
-        else if (strcmp(name, "HOME") == 0) scancode = sf::Keyboard::ScanHome;
-        else if (strcmp(name, "PGUP") == 0) scancode = sf::Keyboard::ScanPageUp;
-        else if (strcmp(name, "DELE") == 0) scancode = sf::Keyboard::ScanDelete;
-        else if (strcmp(name, "END")  == 0) scancode = sf::Keyboard::ScanEnd;
-        else if (strcmp(name, "PGDN") == 0) scancode = sf::Keyboard::ScanPageDown;
-
-        else if (strcmp(name, "UP")   == 0) scancode = sf::Keyboard::ScanUp;
-        else if (strcmp(name, "RGHT") == 0) scancode = sf::Keyboard::ScanRight;
-        else if (strcmp(name, "DOWN") == 0) scancode = sf::Keyboard::ScanDown;
-        else if (strcmp(name, "LEFT") == 0) scancode = sf::Keyboard::ScanLeft;
-
-        else if (strcmp(name, "NMLK") == 0) scancode = sf::Keyboard::ScanNumLock;
-        else if (strcmp(name, "KPDV") == 0) scancode = sf::Keyboard::ScanNumpadDivide;
-        else if (strcmp(name, "KPMU") == 0) scancode = sf::Keyboard::ScanNumpadMultiply;
-        else if (strcmp(name, "KPSU") == 0) scancode = sf::Keyboard::ScanNumpadMinus;
-
-        else if (strcmp(name, "KP7")  == 0) scancode = sf::Keyboard::ScanNumpad7;
-        else if (strcmp(name, "KP8")  == 0) scancode = sf::Keyboard::ScanNumpad8;
-        else if (strcmp(name, "KP9")  == 0) scancode = sf::Keyboard::ScanNumpad9;
-        else if (strcmp(name, "KPAD") == 0) scancode = sf::Keyboard::ScanNumpadPlus;
-        
-        else if (strcmp(name, "KP4")  == 0) scancode = sf::Keyboard::ScanNumpad4;
-        else if (strcmp(name, "KP5")  == 0) scancode = sf::Keyboard::ScanNumpad5;
-        else if (strcmp(name, "KP6")  == 0) scancode = sf::Keyboard::ScanNumpad6;
-        
-        else if (strcmp(name, "KP1")  == 0) scancode = sf::Keyboard::ScanNumpad1;
-        else if (strcmp(name, "KP2")  == 0) scancode = sf::Keyboard::ScanNumpad2;
-        else if (strcmp(name, "KP3")  == 0) scancode = sf::Keyboard::ScanNumpad3;
-        else if (strcmp(name, "KPEN") == 0) scancode = sf::Keyboard::ScanNumpadEnter;
-        
-        else if (strcmp(name, "KP0")  == 0) scancode = sf::Keyboard::ScanNumpad0;
-        else if (strcmp(name, "KPDL") == 0) scancode = sf::Keyboard::ScanNumpadDecimal;
-        else if (strcmp(name, "KPEQ") == 0) scancode = sf::Keyboard::ScanNumpadEqual;
-
-        else if (strcmp(name, "FK13") == 0) scancode = sf::Keyboard::ScanF13;
-        else if (strcmp(name, "FK14") == 0) scancode = sf::Keyboard::ScanF14;
-        else if (strcmp(name, "FK15") == 0) scancode = sf::Keyboard::ScanF15;
-        else if (strcmp(name, "FK16") == 0) scancode = sf::Keyboard::ScanF16;
-        else if (strcmp(name, "FK17") == 0) scancode = sf::Keyboard::ScanF17;
-        else if (strcmp(name, "FK18") == 0) scancode = sf::Keyboard::ScanF18;
-        else if (strcmp(name, "FK19") == 0) scancode = sf::Keyboard::ScanF19;
-        else if (strcmp(name, "FK20") == 0) scancode = sf::Keyboard::ScanF20;
-        else if (strcmp(name, "FK21") == 0) scancode = sf::Keyboard::ScanF21;
-        else if (strcmp(name, "FK22") == 0) scancode = sf::Keyboard::ScanF22;
-        else if (strcmp(name, "FK23") == 0) scancode = sf::Keyboard::ScanF23;
-        else if (strcmp(name, "FK24") == 0) scancode = sf::Keyboard::ScanF24;
-        
-        else if (strcmp(name, "LMTA") == 0) scancode = sf::Keyboard::ScanLSystem;
-        else if (strcmp(name, "RMTA") == 0) scancode = sf::Keyboard::ScanRSystem;
-        else if (strcmp(name, "MUTE") == 0) scancode = sf::Keyboard::ScanVolumeMute;
-        else if (strcmp(name, "VOL-") == 0) scancode = sf::Keyboard::ScanVolumeDown;
-        else if (strcmp(name, "VOL+") == 0) scancode = sf::Keyboard::ScanVolumeUp;
-        else if (strcmp(name, "STOP") == 0) scancode = sf::Keyboard::ScanStop;
-        else if (strcmp(name, "REDO") == 0) scancode = sf::Keyboard::ScanRedo;
-        else if (strcmp(name, "AGAI") == 0) scancode = sf::Keyboard::ScanRedo;
-        else if (strcmp(name, "UNDO") == 0) scancode = sf::Keyboard::ScanUndo;
-        else if (strcmp(name, "COPY") == 0) scancode = sf::Keyboard::ScanCopy;
-        else if (strcmp(name, "PAST") == 0) scancode = sf::Keyboard::ScanPaste;
-        else if (strcmp(name, "FIND") == 0) scancode = sf::Keyboard::ScanSearch;
-        else if (strcmp(name, "CUT")  == 0) scancode = sf::Keyboard::ScanCut;
-        else if (strcmp(name, "HELP") == 0) scancode = sf::Keyboard::ScanHelp;
-
-        else if (strcmp(name, "I156") == 0) scancode = sf::Keyboard::ScanLaunchApplication1;
-        else if (strcmp(name, "I157") == 0) scancode = sf::Keyboard::ScanLaunchApplication2;
-        else if (strcmp(name, "I164") == 0) scancode = sf::Keyboard::ScanFavorites;
-        else if (strcmp(name, "I166") == 0) scancode = sf::Keyboard::ScanBack;
-        else if (strcmp(name, "I167") == 0) scancode = sf::Keyboard::ScanForward;
-        else if (strcmp(name, "I171") == 0) scancode = sf::Keyboard::ScanMediaNextTrack;
-        else if (strcmp(name, "I172") == 0) scancode = sf::Keyboard::ScanMediaPlayPause;
-        else if (strcmp(name, "I173") == 0) scancode = sf::Keyboard::ScanMediaPreviousTrack;
-        else if (strcmp(name, "I174") == 0) scancode = sf::Keyboard::ScanMediaStop;
-        else if (strcmp(name, "I180") == 0) scancode = sf::Keyboard::ScanHomePage;
-        else if (strcmp(name, "I181") == 0) scancode = sf::Keyboard::ScanRefresh;
-        else if (strcmp(name, "I223") == 0) scancode = sf::Keyboard::ScanLaunchMail;
-        else if (strcmp(name, "I234") == 0) scancode = sf::Keyboard::ScanLaunchMediaSelect;
-
-        else                                scancode = sf::Keyboard::ScanUnknown;
-
-        scancodeToKeycode[scancode] = keycode;
+        if (scancode != sf::Keyboard::ScanUnknown)
+            scancodeToKeycode[scancode] = keycode;
         keycodeToScancode[keycode] = scancode;
     }
 
@@ -499,18 +511,19 @@ void initMapping()
 ////////////////////////////////////////////////////////////
 KeyCode scancodeToKeyCode(sf::Keyboard::Scancode code)
 {
-    if (!isMappingInitialized)
-        initMapping();
+    ensureMapping();
 
-    return scancodeToKeycode[code];
+    if (code != sf::Keyboard::ScanUnknown)
+        return scancodeToKeycode[code];
+
+    return NullKeyCode;
 }
 
 
 ////////////////////////////////////////////////////////////
 sf::Keyboard::Scancode keyCodeToScancode(KeyCode code)
 {
-    if (!isMappingInitialized)
-        initMapping();
+    ensureMapping();
 
     if (isValidKeycode(code))
         return keycodeToScancode[code];

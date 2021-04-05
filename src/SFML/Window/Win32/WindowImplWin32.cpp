@@ -602,7 +602,7 @@ Keyboard::Scancode WindowImplWin32::toScancode(WPARAM wParam, LPARAM lParam)
         case 25: return (HIWORD(lParam) & KF_EXTENDED) ? Keyboard::ScanMediaNextTrack     : Keyboard::ScanP;
         case 26: return Keyboard::ScanLBracket;
         case 27: return Keyboard::ScanRBracket;
-        case 28: return (HIWORD(lParam) & KF_EXTENDED) ? Keyboard::ScanEnter              : Keyboard::ScanNumpadEnter;
+        case 28: return (HIWORD(lParam) & KF_EXTENDED) ? Keyboard::ScanNumpadEnter        : Keyboard::ScanEnter;
         case 29: return (HIWORD(lParam) & KF_EXTENDED) ? Keyboard::ScanRControl           : Keyboard::ScanLControl;
         case 30: return (HIWORD(lParam) & KF_EXTENDED) ? Keyboard::ScanSelect             : Keyboard::ScanA;
         case 31: return Keyboard::ScanS;

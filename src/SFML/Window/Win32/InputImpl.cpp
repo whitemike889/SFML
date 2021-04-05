@@ -37,7 +37,6 @@
 #include <SFML/Window/Win32/InputImpl.hpp>
 #include <windows.h>
 
-
 namespace sf
 {
 namespace priv
@@ -52,108 +51,108 @@ Keyboard::Key winKeyToSfKey(int vkey)
     Keyboard::Key key;
     switch (vkey)
     {
-        default:                key = Keyboard::Unknown; break;
-        case 'A':               key = Keyboard::A; break;
-        case 'B':               key = Keyboard::B; break;
-        case 'C':               key = Keyboard::C; break;
-        case 'D':               key = Keyboard::D; break;
-        case 'E':               key = Keyboard::E; break;
-        case 'F':               key = Keyboard::F; break;
-        case 'G':               key = Keyboard::G; break;
-        case 'H':               key = Keyboard::H; break;
-        case 'I':               key = Keyboard::I; break;
-        case 'J':               key = Keyboard::J; break;
-        case 'K':               key = Keyboard::K; break;
-        case 'L':               key = Keyboard::L; break;
-        case 'M':               key = Keyboard::M; break;
-        case 'N':               key = Keyboard::N; break;
-        case 'O':               key = Keyboard::O; break;
-        case 'P':               key = Keyboard::P; break;
-        case 'Q':               key = Keyboard::Q; break;
-        case 'R':               key = Keyboard::R; break;
-        case 'S':               key = Keyboard::S; break;
-        case 'T':               key = Keyboard::T; break;
-        case 'U':               key = Keyboard::U; break;
-        case 'V':               key = Keyboard::V; break;
-        case 'W':               key = Keyboard::W; break;
-        case 'X':               key = Keyboard::X; break;
-        case 'Y':               key = Keyboard::Y; break;
-        case 'Z':               key = Keyboard::Z; break;
-        case '0':               key = Keyboard::Num0; break;
-        case '1':               key = Keyboard::Num1; break;
-        case '2':               key = Keyboard::Num2; break;
-        case '3':               key = Keyboard::Num3; break;
-        case '4':               key = Keyboard::Num4; break;
-        case '5':               key = Keyboard::Num5; break;
-        case '6':               key = Keyboard::Num6; break;
-        case '7':               key = Keyboard::Num7; break;
-        case '8':               key = Keyboard::Num8; break;
-        case '9':               key = Keyboard::Num9; break;
-        case VK_ESCAPE:         key = Keyboard::Escape; break;
-        case VK_LCONTROL:       key = Keyboard::LControl; break;
-        case VK_LSHIFT:         key = Keyboard::LShift; break;
-        case VK_LMENU:          key = Keyboard::LAlt; break;
-        case VK_LWIN:           key = Keyboard::LSystem; break;
-        case VK_RCONTROL:       key = Keyboard::RControl; break;
-        case VK_RSHIFT:         key = Keyboard::RShift; break;
-        case VK_RMENU:          key = Keyboard::RAlt; break;
-        case VK_RWIN:           key = Keyboard::RSystem; break;
-        case VK_APPS:           key = Keyboard::Menu; break;
-        case VK_OEM_4:          key = Keyboard::LBracket; break;
-        case VK_OEM_6:          key = Keyboard::RBracket; break;
-        case VK_OEM_1:          key = Keyboard::Semicolon; break;
-        case VK_OEM_COMMA:      key = Keyboard::Comma; break;
-        case VK_OEM_PERIOD:     key = Keyboard::Period; break;
-        case VK_OEM_7:          key = Keyboard::Apostrophe; break;
-        case VK_OEM_2:          key = Keyboard::Slash; break;
-        case VK_OEM_5:          key = Keyboard::Backslash; break;
-        case VK_OEM_3:          key = Keyboard::Tilde; break;
-        case VK_OEM_PLUS:       key = Keyboard::Equal; break;
-        case VK_OEM_MINUS:      key = Keyboard::Hyphen; break;
-        case VK_SPACE:          key = Keyboard::Space; break;
-        case VK_RETURN:         key = Keyboard::Enter; break;
-        case VK_BACK:           key = Keyboard::Backspace; break;
-        case VK_TAB:            key = Keyboard::Tab; break;
-        case VK_PRIOR:          key = Keyboard::PageUp; break;
-        case VK_NEXT:           key = Keyboard::PageDown; break;
-        case VK_END:            key = Keyboard::End; break;
-        case VK_HOME:           key = Keyboard::Home; break;
-        case VK_INSERT:         key = Keyboard::Insert; break;
-        case VK_DELETE:         key = Keyboard::Delete; break;
-        case VK_ADD:            key = Keyboard::Add; break;
-        case VK_SUBTRACT:       key = Keyboard::Subtract; break;
-        case VK_MULTIPLY:       key = Keyboard::Multiply; break;
-        case VK_DIVIDE:         key = Keyboard::Divide; break;
-        case VK_LEFT:           key = Keyboard::Left; break;
-        case VK_RIGHT:          key = Keyboard::Right; break;
-        case VK_UP:             key = Keyboard::Up; break;
-        case VK_DOWN:           key = Keyboard::Down; break;
-        case VK_NUMPAD0:        key = Keyboard::Numpad0; break;
-        case VK_NUMPAD1:        key = Keyboard::Numpad1; break;
-        case VK_NUMPAD2:        key = Keyboard::Numpad2; break;
-        case VK_NUMPAD3:        key = Keyboard::Numpad3; break;
-        case VK_NUMPAD4:        key = Keyboard::Numpad4; break;
-        case VK_NUMPAD5:        key = Keyboard::Numpad5; break;
-        case VK_NUMPAD6:        key = Keyboard::Numpad6; break;
-        case VK_NUMPAD7:        key = Keyboard::Numpad7; break;
-        case VK_NUMPAD8:        key = Keyboard::Numpad8; break;
-        case VK_NUMPAD9:        key = Keyboard::Numpad9; break;
-        case VK_F1:             key = Keyboard::F1; break;
-        case VK_F2:             key = Keyboard::F2; break;
-        case VK_F3:             key = Keyboard::F3; break;
-        case VK_F4:             key = Keyboard::F4; break;
-        case VK_F5:             key = Keyboard::F5; break;
-        case VK_F6:             key = Keyboard::F6; break;
-        case VK_F7:             key = Keyboard::F7; break;
-        case VK_F8:             key = Keyboard::F8; break;
-        case VK_F9:             key = Keyboard::F9; break;
-        case VK_F10:            key = Keyboard::F10; break;
-        case VK_F11:            key = Keyboard::F11; break;
-        case VK_F12:            key = Keyboard::F12; break;
-        case VK_F13:            key = Keyboard::F13; break;
-        case VK_F14:            key = Keyboard::F14; break;
-        case VK_F15:            key = Keyboard::F15; break;
-        case VK_PAUSE:          key = Keyboard::Pause; break;
+        default:            key = Keyboard::Unknown;    break;
+        case 'A':           key = Keyboard::A;          break;
+        case 'B':           key = Keyboard::B;          break;
+        case 'C':           key = Keyboard::C;          break;
+        case 'D':           key = Keyboard::D;          break;
+        case 'E':           key = Keyboard::E;          break;
+        case 'F':           key = Keyboard::F;          break;
+        case 'G':           key = Keyboard::G;          break;
+        case 'H':           key = Keyboard::H;          break;
+        case 'I':           key = Keyboard::I;          break;
+        case 'J':           key = Keyboard::J;          break;
+        case 'K':           key = Keyboard::K;          break;
+        case 'L':           key = Keyboard::L;          break;
+        case 'M':           key = Keyboard::M;          break;
+        case 'N':           key = Keyboard::N;          break;
+        case 'O':           key = Keyboard::O;          break;
+        case 'P':           key = Keyboard::P;          break;
+        case 'Q':           key = Keyboard::Q;          break;
+        case 'R':           key = Keyboard::R;          break;
+        case 'S':           key = Keyboard::S;          break;
+        case 'T':           key = Keyboard::T;          break;
+        case 'U':           key = Keyboard::U;          break;
+        case 'V':           key = Keyboard::V;          break;
+        case 'W':           key = Keyboard::W;          break;
+        case 'X':           key = Keyboard::X;          break;
+        case 'Y':           key = Keyboard::Y;          break;
+        case 'Z':           key = Keyboard::Z;          break;
+        case '0':           key = Keyboard::Num0;       break;
+        case '1':           key = Keyboard::Num1;       break;
+        case '2':           key = Keyboard::Num2;       break;
+        case '3':           key = Keyboard::Num3;       break;
+        case '4':           key = Keyboard::Num4;       break;
+        case '5':           key = Keyboard::Num5;       break;
+        case '6':           key = Keyboard::Num6;       break;
+        case '7':           key = Keyboard::Num7;       break;
+        case '8':           key = Keyboard::Num8;       break;
+        case '9':           key = Keyboard::Num9;       break;
+        case VK_ESCAPE:     key = Keyboard::Escape;     break;
+        case VK_LCONTROL:   key = Keyboard::LControl;   break;
+        case VK_LSHIFT:     key = Keyboard::LShift;     break;
+        case VK_LMENU:      key = Keyboard::LAlt;       break;
+        case VK_LWIN:       key = Keyboard::LSystem;    break;
+        case VK_RCONTROL:   key = Keyboard::RControl;   break;
+        case VK_RSHIFT:     key = Keyboard::RShift;     break;
+        case VK_RMENU:      key = Keyboard::RAlt;       break;
+        case VK_RWIN:       key = Keyboard::RSystem;    break;
+        case VK_APPS:       key = Keyboard::Menu;       break;
+        case VK_OEM_4:      key = Keyboard::LBracket;   break;
+        case VK_OEM_6:      key = Keyboard::RBracket;   break;
+        case VK_OEM_1:      key = Keyboard::Semicolon;  break;
+        case VK_OEM_COMMA:  key = Keyboard::Comma;      break;
+        case VK_OEM_PERIOD: key = Keyboard::Period;     break;
+        case VK_OEM_7:      key = Keyboard::Apostrophe; break;
+        case VK_OEM_2:      key = Keyboard::Slash;      break;
+        case VK_OEM_5:      key = Keyboard::Backslash;  break;
+        case VK_OEM_3:      key = Keyboard::Tilde;      break;
+        case VK_OEM_PLUS:   key = Keyboard::Equal;      break;
+        case VK_OEM_MINUS:  key = Keyboard::Hyphen;     break;
+        case VK_SPACE:      key = Keyboard::Space;      break;
+        case VK_RETURN:     key = Keyboard::Enter;      break;
+        case VK_BACK:       key = Keyboard::Backspace;  break;
+        case VK_TAB:        key = Keyboard::Tab;        break;
+        case VK_PRIOR:      key = Keyboard::PageUp;     break;
+        case VK_NEXT:       key = Keyboard::PageDown;   break;
+        case VK_END:        key = Keyboard::End;        break;
+        case VK_HOME:       key = Keyboard::Home;       break;
+        case VK_INSERT:     key = Keyboard::Insert;     break;
+        case VK_DELETE:     key = Keyboard::Delete;     break;
+        case VK_ADD:        key = Keyboard::Add;        break;
+        case VK_SUBTRACT:   key = Keyboard::Subtract;   break;
+        case VK_MULTIPLY:   key = Keyboard::Multiply;   break;
+        case VK_DIVIDE:     key = Keyboard::Divide;     break;
+        case VK_LEFT:       key = Keyboard::Left;       break;
+        case VK_RIGHT:      key = Keyboard::Right;      break;
+        case VK_UP:         key = Keyboard::Up;         break;
+        case VK_DOWN:       key = Keyboard::Down;       break;
+        case VK_NUMPAD0:    key = Keyboard::Numpad0;    break;
+        case VK_NUMPAD1:    key = Keyboard::Numpad1;    break;
+        case VK_NUMPAD2:    key = Keyboard::Numpad2;    break;
+        case VK_NUMPAD3:    key = Keyboard::Numpad3;    break;
+        case VK_NUMPAD4:    key = Keyboard::Numpad4;    break;
+        case VK_NUMPAD5:    key = Keyboard::Numpad5;    break;
+        case VK_NUMPAD6:    key = Keyboard::Numpad6;    break;
+        case VK_NUMPAD7:    key = Keyboard::Numpad7;    break;
+        case VK_NUMPAD8:    key = Keyboard::Numpad8;    break;
+        case VK_NUMPAD9:    key = Keyboard::Numpad9;    break;
+        case VK_F1:         key = Keyboard::F1;         break;
+        case VK_F2:         key = Keyboard::F2;         break;
+        case VK_F3:         key = Keyboard::F3;         break;
+        case VK_F4:         key = Keyboard::F4;         break;
+        case VK_F5:         key = Keyboard::F5;         break;
+        case VK_F6:         key = Keyboard::F6;         break;
+        case VK_F7:         key = Keyboard::F7;         break;
+        case VK_F8:         key = Keyboard::F8;         break;
+        case VK_F9:         key = Keyboard::F9;         break;
+        case VK_F10:        key = Keyboard::F10;        break;
+        case VK_F11:        key = Keyboard::F11;        break;
+        case VK_F12:        key = Keyboard::F12;        break;
+        case VK_F13:        key = Keyboard::F13;        break;
+        case VK_F14:        key = Keyboard::F14;        break;
+        case VK_F15:        key = Keyboard::F15;        break;
+        case VK_PAUSE:      key = Keyboard::Pause;      break;
     }
     return key;
 }
@@ -324,7 +323,7 @@ WORD sfScanToWin(Keyboard::Scancode code)
         case Keyboard::ScanLBracket:   return 26;
         case Keyboard::ScanRBracket:   return 27;
         case Keyboard::ScanBackslash:  return 43;
-        case Keyboard::ScanGrave:      return 42;
+        case Keyboard::ScanGrave:      return 41;
         case Keyboard::ScanSemicolon:  return 39;
         case Keyboard::ScanApostrophe: return 40;
         case Keyboard::ScanComma:      return 51;
@@ -440,14 +439,13 @@ WORD sfScanToWin(Keyboard::Scancode code)
 }
 
 ////////////////////////////////////////////////////////////
-InputImpl::InputImpl()
+void InputImpl::ensureMappings()
 {
-    buildMappings();
-}
+    static bool isInitialized = false;
 
-////////////////////////////////////////////////////////////
-void InputImpl::buildMappings()
-{
+    if (isInitialized)
+        return;
+
     // Reset the mappings
     for (int i = 0; i < Keyboard::KeyCount; ++i)
         m_keyToScancodeMapping[i] = Keyboard::ScanUnknown;
@@ -463,6 +461,8 @@ void InputImpl::buildMappings()
         m_keyToScancodeMapping[key] = scan;
         m_scancodeToKeyMapping[scan] = key;
     }
+
+    isInitialized = true;
 }
 
 ////////////////////////////////////////////////////////////
@@ -483,12 +483,16 @@ bool InputImpl::isKeyPressed(Keyboard::Scancode code)
 ////////////////////////////////////////////////////////////
 Keyboard::Key InputImpl::localize(Keyboard::Scancode code)
 {
+    ensureMappings();
+
     return m_scancodeToKeyMapping[code];
 }
 
 ////////////////////////////////////////////////////////////
 Keyboard::Scancode InputImpl::unlocalize(Keyboard::Key key)
 {
+    ensureMappings();
+
     return m_keyToScancodeMapping[key];
 }
 
