@@ -451,12 +451,14 @@ void ensureMapping()
     if (isMappingInitialized)
         return;
 
-    for (int i = 0; i < MaxKeyCode; ++i)
+    // Phase 1: Initialize mappings with default values
+    for (int i = 0; i < sf::Keyboard::ScanCodeCount; ++i)
         scancodeToKeycode[i] = NullKeyCode;
 
-    for (int i = 0; i < sf::Keyboard::ScanCodeCount; ++i)
+    for (int i = 0; i < MaxKeyCode; ++i)
         keycodeToScancode[i] = sf::Keyboard::ScanUnknown;
 
+    // Phase 2: Get XKB names with key code
     Display* display = sf::priv::OpenDisplay();
 
     char name[XkbKeyNameLength + 1];
@@ -484,14 +486,14 @@ void ensureMapping()
 
         if (scancode != sf::Keyboard::ScanUnknown)
             scancodeToKeycode[scancode] = keycode;
+
         keycodeToScancode[keycode] = scancode;
     }
 
     XkbFreeNames(descriptor, XkbKeyNamesMask, True);
     XkbFreeKeyboard(descriptor, 0, True);
 
-    // Translate un-translated keycodes using traditional X11 KeySym lookups
-    // Valid keycodes are [8;255], so we only initialize those
+    // Phase 3: Translate un-translated keycodes using traditional X11 KeySym lookups
     for (int keycode = 8; keycode < MaxKeyCode; ++keycode)
     {
         if (keycodeToScancode[keycode] == sf::Keyboard::ScanUnknown)

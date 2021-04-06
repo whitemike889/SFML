@@ -126,11 +126,7 @@ Keyboard::Scancode HIDInputManager::unlocalize(Keyboard::Key key)
 ////////////////////////////////////////////////////////////
 String HIDInputManager::localizedRepresentation(Keyboard::Scancode code)
 {
-    UniChar unicode = toUnicode(localize(code));
-    if (unicode != 0x00)
-        return sf::String(static_cast<Uint32>(unicode));
-
-    // Fallback to our best guess for the keys that are known to be independent of the layout.
+    // Phase 1: Get names for layout independent keys
     switch (code)
     {
         case sf::Keyboard::ScanEnter:     return "Enter";
@@ -226,7 +222,16 @@ String HIDInputManager::localizedRepresentation(Keyboard::Scancode code)
         case sf::Keyboard::ScanRAlt:     return "Right Alt";
         case sf::Keyboard::ScanRSystem:  return "Right Command";
 
-        default: return "Unknown Scancode"; // no guess good enough possible.
+        default:
+        {
+            // Phase 2: Try to convert the key to unicode
+            UniChar unicode = toUnicode(localize(code));
+            if (unicode != 0x00)
+                return sf::String(static_cast<Uint32>(unicode));
+        }
+
+        // Phase 3: Return final fallback
+        return "Unknown";
     }
 }
 
@@ -338,9 +343,9 @@ void HIDInputManager::buildMappings()
 {
     // Reset the mappings
     for (int i = 0; i < Keyboard::KeyCount; ++i)
-      m_keyToScancodeMapping[i] = Keyboard::ScanUnknown;
+        m_keyToScancodeMapping[i] = Keyboard::ScanUnknown;
     for (int i = 0; i < Keyboard::ScanCodeCount; ++i)
-      m_scancodeToKeyMapping[i] = Keyboard::Unknown;
+        m_scancodeToKeyMapping[i] = Keyboard::Unknown;
 
     // Get the current keyboard layout
     TISInputSourceRef tis = TISCopyCurrentKeyboardLayoutInputSource();
@@ -384,9 +389,11 @@ void HIDInputManager::buildMappings()
         }
 
         Keyboard::Key code = (length > 0) ? localizedKey(string[0]) : Keyboard::Unknown;
-        if (code == Keyboard::Unknown) code = localizedKeyFallback(scan);
-
-        if (code == Keyboard::Unknown) continue;
+        
+        if (code == Keyboard::Unknown)
+            code = localizedKeyFallback(scan);
+        if (code == Keyboard::Unknown)
+            continue;
 
         // Register the bi-mapping
         m_keyToScancodeMapping[code] = scan;

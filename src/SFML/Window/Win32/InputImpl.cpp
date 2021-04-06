@@ -441,17 +441,19 @@ WORD sfScanToWin(Keyboard::Scancode code)
 ////////////////////////////////////////////////////////////
 void InputImpl::ensureMappings()
 {
-    static bool isInitialized = false;
+    static bool isMappingInitialized = false;
 
-    if (isInitialized)
+    if (isMappingInitialized)
         return;
 
-    // Reset the mappings
+    // Phase 1: Initialize mappings with default values
     for (int i = 0; i < Keyboard::KeyCount; ++i)
         m_keyToScancodeMapping[i] = Keyboard::ScanUnknown;
+
     for (int i = 0; i < Keyboard::ScanCodeCount; ++i)
         m_scancodeToKeyMapping[i] = Keyboard::Unknown;
 
+    // Phase 2: Translate scancode to virtual code to key names
     for (int i = 0; i < Keyboard::ScanCodeCount; ++i)
     {
         Keyboard::Scancode scan = static_cast<Keyboard::Scancode>(i);
@@ -462,7 +464,7 @@ void InputImpl::ensureMappings()
         m_scancodeToKeyMapping[scan] = key;
     }
 
-    isInitialized = true;
+    isMappingInitialized = true;
 }
 
 ////////////////////////////////////////////////////////////
